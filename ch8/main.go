@@ -10,6 +10,27 @@ func DoubleVal[T Val](v T) T {
 	return v * 2
 }
 
+type Printable interface {
+	fmt.Stringer
+	~int | ~float64
+}
+
+type PrintableInt int
+
+func (p PrintableInt) String() string {
+	return fmt.Sprintf("Printable int type: %d\n", p)
+}
+
+type PrintableFloat float64
+
+func (p PrintableFloat) String() string {
+	return fmt.Sprintf("Printable float type: %f\n", p)
+}
+
+func PrintPrintable[T Printable](p T) {
+	fmt.Println(p)
+}
+
 func main() {
 	var x int
 	var y float32
@@ -20,4 +41,9 @@ func main() {
 	fmt.Println(DoubleVal(x))
 	fmt.Println(DoubleVal(y))
 	fmt.Println(DoubleVal(z))
+	fmt.Println("---------------")
+	var i PrintableInt = 7
+	var i2 PrintableFloat = 14.0
+	PrintPrintable(i)
+	PrintPrintable(i2)
 }
